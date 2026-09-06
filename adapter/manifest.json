@@ -1,0 +1,15 @@
+{
+    "name": "BiliDM",
+    "display_name": "BiliBili DM",
+    "version": "1.1.0",
+    "author": "xxynet",
+    "description": "BiliBili Direct Message Adapter",
+    "repo": "https://github.com/xxynet/kira-ai-ada-bilidm",
+    "icon": "icon.svg",
+    "locales": {
+        "zh": {
+            "display_name": "BiliBili私信",
+            "description": "BiliBili 私信平台适配器"
+        }
+    }
+}

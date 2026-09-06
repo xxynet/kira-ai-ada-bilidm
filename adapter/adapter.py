@@ -13,19 +13,14 @@ from bilibili_api.user import User as BiliUser
 
 from core.logging_manager import get_logger
 from core.adapter.adapter_utils import IMAdapter
+from core.adapter.adapter_info import AdapterInfo
 from core.chat import KiraMessageEvent, KiraIMMessage, MessageChain, KiraIMSentResult
 from core.chat import User
 
 from core.chat.message_elements import (
     Text,
     Image,
-    At,
-    Reply,
-    Emoji,
-    Sticker,
-    Record,
-    File,
-    Video
+    Emoji
 )
 
 
@@ -39,8 +34,8 @@ class BiliDMAdapter(IMAdapter):
     and send_msg to send replies. Supports TEXT and PICTURE message types.
     """
 
-    def __init__(self, info, loop: asyncio.AbstractEventLoop, event_bus: asyncio.Queue, llm_api):
-        super().__init__(info, loop, event_bus, llm_api)
+    def __init__(self, info: AdapterInfo, event_queue: asyncio.Queue):
+        super().__init__(info, event_queue)
 
         # config
         self.bot_uid: str = self.config.get("bot_uid", "")

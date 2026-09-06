@@ -1,6 +1,8 @@
-# BiliDM Adapter
+# BiliDM Adapter Plugin
 
-B站（BiliBili）私信适配器，允许 KiraAI 通过 B站私信与用户进行交互。
+B站（BiliBili）私信适配器插件，允许 KiraAI 通过 B站私信与用户进行交互。
+
+本插件通过 KiraAI 插件系统的 `ctx.register_adapter()` 接口注册适配器，安装到 `data/plugins/` 后即可在 WebUI 中创建 `BiliDM` 类型的适配器实例。
 
 ## 功能特性
 
@@ -23,7 +25,7 @@ B站（BiliBili）私信适配器，允许 KiraAI 通过 B站私信与用户进�
 
 ## 配置项
 
-通过 WebUI 或 `schema.json` 配置以下字段：
+在 WebUI 中创建 BiliDM 适配器后，可配置以下字段：
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
@@ -35,7 +37,7 @@ B站（BiliBili）私信适配器，允许 KiraAI 通过 B站私信与用户进�
 | `bili_jct` | string | B站 Cookie 中的 `bili_jct`（CSRF Token） |
 | `buvid3` | string | B站 Cookie 中的 `buvid3` |
 | `dedeuserid` | string | B站 Cookie 中的 `DedeUserID` |
-| `ac_time_value` | string | B站 Cookie 中的 `ac_time_value` |
+| `ac_time_value` | string | B站 Cookie/LocalStorage 中的 `ac_time_value` |
 
 ## 获取 Cookie
 
@@ -52,19 +54,23 @@ B站（BiliBili）私信适配器，允许 KiraAI 通过 B站私信与用户进�
 
 ## 依赖
 
-- `bilibili_api` — B站 API 封装库
+- `bilibili_api` — B站 API 封装库（KiraAI 核心依赖，>= 17.4.0）
 - `httpx` — 异步 HTTP 客户端（用于图片下载）
 
 ## 文件结构
 
 ```
-bili_dm/
-├── __init__.py      # 模块导出
-├── bili_dm.py       # 适配器主实现
-├── emoji.json       # 表情 ID → Unicode 映射表
-├── manifest.json    # 适配器元信息（名称、版本等）
-├── schema.json      # 配置字段定义（供 WebUI 渲染）
-└── README.md        # 本文件
+kira-ai-ada-bilidm/
+├── main.py              # 插件入口，通过 ctx.register_adapter("adapter") 注册适配器
+├── manifest.json        # 插件元信息
+├── icon.svg             # 插件图标
+├── README.md            # 本文件
+└── adapter/             # 适配器组件目录
+    ├── adapter.py       # 适配器主实现（BiliDMAdapter）
+    ├── manifest.json    # 适配器元信息（platform 名称：BiliDM）
+    ├── schema.json      # 配置字段定义（供 WebUI 渲染）
+    ├── emoji.json       # 表情 ID → Unicode 映射表
+    └── icon.svg         # 适配器图标
 ```
 
 ## 注意事项
@@ -72,3 +78,4 @@ bili_dm/
 - 图片下载需要携带 B站 Cookie 才能正常访问，适配器内部已自动处理
 - `send_group_message` 不被 B站私信支持，会自动降级为私信发送并输出警告日志
 - 适配器使用 `Session` 轮询机制，约每 6 秒检查一次新消息
+- 禁用或卸载插件时，KiraAI 会自动停止并注销该平台的所有适配器实例

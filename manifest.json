@@ -1,7 +1,16 @@
 {
-    "name": "BiliDM",
-    "version": "1.0.0",
+    "display_name": "BiliBili DM",
+    "plugin_id": "kira-ai-ada-bilidm",
+    "version": "1.1.0",
     "author": "xxynet",
-    "description": "BiliBili Direct Message Adapter",
-    "repo": "https://github.com/xxynet/kira-ai-ada-bilidm"
+    "icon": "icon.svg",
+    "tags": ["adapter", "social"],
+    "description": "Provides a BiliBili Direct Message platform adapter for KiraAI",
+    "repo": "https://github.com/xxynet/kira-ai-ada-bilidm",
+    "locales": {
+        "zh": {
+            "display_name": "BiliBili私信",
+            "description": "为 KiraAI 提供 BiliBili 私信平台适配器"
+        }
+    }
 }
